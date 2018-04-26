@@ -1,6 +1,6 @@
 
 clear all
-addpath("./sPC1d")
+addpath('./sPC1d');
 %pc1dSetthickness('perov.prm','CRegion::m_Thickness',top/1e7);
 pc1dSet('perov.prm','In CData: GraphableQuantity g','46','CGraph::m_xquantity:');
 pc1dSet('perov.prm','In CData: GraphableQuantity g','45','CGraph::m_yquantity[0]:');
@@ -104,13 +104,13 @@ for i=1:1:Num,
         
         k= min(find(JV(dl*j-dl+1:dl*j,2*i-1)>0))+1;
         if k>66
-            continue
+            k=60;
         end
         if isempty(k)
-            continue
+            k=60;
         end
         F=griddedInterpolant(JV(dl*j-dl+3:dl*j-dl+k,2*i),JV(dl*j-dl+3:dl*j-dl+k,2*i-1));
-        vv= log10(linspace(10^(0),10^(1.1),50))';
+        vv= linspace((0),(0.5),50)';
 
         JJ(50*j-50+1:50*j,m) = F(vv); 
     end
@@ -126,10 +126,10 @@ for i=1:1:Num,
    
 end
 
-for j = 1: 50
-   min1=  min(min(JJ));
-   max1=  max(max(JJ));
-   nJ(j,:) = (JJ(j,:)-min1)/(max1-min1);
+for j = 1: 150
+   min1=  (min(JJ));
+   max1=  (max(JJ));
+   nJ(j,:) = (JJ(j,:)-min1)./(max1-min1);
 end
 
 dlmwrite('nJV1.txt', nJ,'delimiter', '\t','newline','pc')
